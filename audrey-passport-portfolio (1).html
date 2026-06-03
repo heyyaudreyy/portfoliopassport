@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audrey Trajano · Passport Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Special+Elite&family=Work+Sans:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fbf3f5;
+    --paper-dark:#f3e1e8;
+    --ink:#3a2630;
+    --ink-soft:#7a5a68;
+    --cover:#d96a93;
+    --cover-dark:#b34d77;
+    --cover-deep:#8f3a5e;
+    --gold:#f3d6a8;
+    --gold-light:#fcecc9;
+    --stamp-red:#8a2f54;
+    --stamp-blue:#3a4e7c;
+    --stamp-green:#356a4e;
+    --stamp-purple:#653a67;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:#2b2326;
+    background-image:radial-gradient(circle at 50% 30%, #3d2f35, #1c1619 80%);
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+    font-family:'Work Sans',sans-serif;
+    color:var(--ink);padding:24px;overflow-x:hidden;
+  }
+
+  /* TOP NAV BAR */
+  .sidebar{
+    width:min(880px,96vw);flex-shrink:0;
+    background:linear-gradient(160deg,rgba(217,106,147,.16),rgba(143,58,94,.1));
+    border:1px solid rgba(243,214,168,.25);border-radius:14px;
+    padding:12px 18px;backdrop-filter:blur(4px);
+    box-shadow:0 16px 40px rgba(0,0,0,.4);
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .sidebar .sb-brand{flex-shrink:0;padding-right:16px;border-right:1px dashed rgba(243,214,168,.25)}
+  .sidebar .sb-title{
+    font-family:'Work Sans',sans-serif;font-weight:600;font-size:15px;letter-spacing:1px;
+    color:var(--gold-light);line-height:1.1;
+  }
+  .sidebar .sb-sub{
+    font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:2px;
+    color:var(--cover);text-transform:uppercase;
+  }
+  .sidebar nav{display:flex;flex-wrap:wrap;gap:3px;flex:1}
+  .sb-link{
+    display:flex;align-items:center;gap:7px;
+    background:none;border:none;cursor:pointer;text-align:left;
+    font-family:'Work Sans',sans-serif;font-size:13px;color:#e8d5dd;
+    padding:8px 11px;border-radius:8px;transition:.2s;
+  }
+  .sb-link:hover{background:rgba(243,214,168,.12);color:#fff}
+  .sb-link.current{background:var(--cover-dark);color:var(--gold-light)}
+  .sb-link .sb-ic{font-size:14px;opacity:.9}
+  .sb-link .sb-no{display:none}
+  @media(max-width:600px){
+    .sidebar{flex-direction:column;align-items:stretch;gap:10px}
+    .sidebar .sb-brand{border-right:none;border-bottom:1px dashed rgba(243,214,168,.25);padding:0 0 10px;text-align:center}
+    .sidebar nav{justify-content:center}
+    .sb-link{font-size:12px;padding:7px 9px}
+  }
+  .passport{position:relative;width:min(420px,92vw);aspect-ratio:5/7;perspective:2200px;transition:transform 1.1s cubic-bezier(.7,0,.2,1);}
+  .passport.open{transform:translateX(50%);}
+  @media(max-width:600px){ .passport.open{transform:translateX(50%) scale(.96);} }
+  .stage{position:relative;width:100%;height:100%;transform-style:preserve-3d;}
+  .noise{
+    position:absolute;inset:0;pointer-events:none;opacity:.06;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* leather grain for the cover */
+  .leather{
+    position:absolute;inset:0;pointer-events:none;border-radius:inherit;z-index:1;
+    opacity:.5;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='l'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.16' numOctaves='5' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23l)'/%3E%3C/svg%3E");
+  }
+  .leather.fine{
+    opacity:.35;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='lf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23lf)'/%3E%3C/svg%3E");
+  }
+  .cover{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(120% 80% at 30% 20%, rgba(255,255,255,.10), transparent 55%),
+      radial-gradient(140% 120% at 70% 90%, rgba(0,0,0,.28), transparent 60%),
+      linear-gradient(135deg,var(--cover),var(--cover-dark) 55%,var(--cover-deep));
+    border-radius:8px 14px 14px 8px;
+    box-shadow:
+      0 38px 70px rgba(0,0,0,.55),
+      0 6px 14px rgba(0,0,0,.4),
+      inset 0 0 0 2px rgba(0,0,0,.18),
+      inset 0 2px 3px rgba(255,255,255,.18),
+      inset 0 -10px 24px rgba(0,0,0,.3);
+    transform-origin:left center;transform-style:preserve-3d;
+    transition:transform 1.1s cubic-bezier(.7,0,.2,1);
+    z-index:50;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+    padding:54px 30px;color:var(--gold-light);text-align:center;overflow:hidden;
+  }
+  /* stitched inner frame */
+  .cover::before{
+    content:"";position:absolute;inset:16px;border-radius:6px;
+    border:1.5px dashed rgba(243,214,168,.45);
+    box-shadow:inset 0 0 18px rgba(0,0,0,.25);
+    pointer-events:none;z-index:2;
+  }
+  /* spine shadow */
+  .cover::after{content:"";position:absolute;left:0;top:0;bottom:0;width:18px;
+    background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 60%,transparent);
+    border-radius:8px 0 0 8px;z-index:3;}
+  .open .cover{transform:rotateY(-160deg)}
+  .cover > *{position:relative;z-index:4}
+  .crest{
+    width:96px;height:96px;border:3px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:42px;color:var(--gold);
+    box-shadow:0 0 0 6px rgba(243,214,168,.16), inset 0 2px 6px rgba(0,0,0,.35), 0 2px 5px rgba(0,0,0,.3);
+    background:radial-gradient(circle at 50% 35%,rgba(243,214,168,.20),rgba(0,0,0,.1) 75%);
+  }
+  .monogram{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:54px;line-height:1;
+    color:var(--gold-light);
+    text-shadow:0 1px 0 rgba(255,255,255,.4), 0 -1px 1px rgba(0,0,0,.5), 0 3px 5px rgba(0,0,0,.4);
+    transform:translateY(-2px);
+  }
+  /* gold-foil embossed lettering */
+  .cover h1{
+    font-family:'Special Elite',serif;letter-spacing:4px;font-size:20px;font-weight:400;line-height:1.6;
+    color:var(--gold-light);
+    text-shadow:0 1px 0 rgba(255,255,255,.35), 0 -1px 1px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.4);
+  }
+  .cover .sub{
+    font-family:'Courier Prime',monospace;letter-spacing:3px;font-size:12px;margin-top:10px;color:var(--gold);
+    text-shadow:0 1px 0 rgba(255,255,255,.25), 0 -1px 1px rgba(0,0,0,.5);
+  }
+  .cover .hint{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:2px;opacity:.7;animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
+  .book{
+    position:absolute;inset:0;background:var(--paper-dark);
+    border-radius:8px 14px 14px 8px;
+    box-shadow:0 30px 60px rgba(0,0,0,.5);
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  /* gilded / stacked page edges on the outer (right) side */
+  .book::before{
+    content:"";position:absolute;top:5px;bottom:5px;right:-1px;width:9px;z-index:6;
+    border-radius:0 6px 6px 0;pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      #efe3c4 0 1px, #d8c79b 1px 2px, #f3ead0 2px 3px);
+    box-shadow:inset -2px 0 4px rgba(0,0,0,.25), 1px 0 3px rgba(0,0,0,.3);
+  }
+  /* stacked pages along the bottom edge */
+  .book::after{
+    content:"";position:absolute;left:6px;right:6px;bottom:-1px;height:7px;z-index:6;
+    border-radius:0 0 8px 8px;pointer-events:none;
+    background:repeating-linear-gradient(
+      to right,
+      #efe3c4 0 2px, #d8c79b 2px 3px, #f3ead0 3px 4px);
+    box-shadow:inset 0 -2px 3px rgba(0,0,0,.2);
+  }
+  .page-view{
+    flex:1;position:relative;overflow:hidden;
+    background:
+      linear-gradient(90deg,rgba(140,80,110,.18) 0%,rgba(140,80,110,.04) 5%,transparent 9%),
+      radial-gradient(120% 100% at 100% 50%, rgba(120,70,95,.07), transparent 50%),
+      repeating-linear-gradient(0deg,transparent 0 27px,rgba(140,80,110,.05) 27px 28px),
+      repeating-linear-gradient(45deg, rgba(150,90,120,.035) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(-45deg, rgba(150,90,120,.035) 0 1px, transparent 1px 7px),
+      var(--paper);
+  }
+  /* faint paper fiber + speckle texture over the pages */
+  .page-view::before{
+    content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+    opacity:.85;mix-blend-mode:multiply;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.9' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .35 0 0 0 0 .45 0 0 0 0.6 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0 0 0 0 0 0 0 0 0 0 0 0 0 .12 .18'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  }
+  /* ghosted watermark monogram, like a passport security mark */
+  .page-view::after{
+    content:"A";position:absolute;right:-6px;bottom:34px;z-index:1;pointer-events:none;
+    font-family:'Playfair Display',serif;font-weight:700;font-size:200px;line-height:1;
+    color:rgba(140,80,110,.05);transform:rotate(-8deg);
+    text-shadow:0 1px 0 rgba(255,255,255,.4);
+  }
+  .page{
+    position:absolute;inset:0;padding:40px 30px 30px;overflow-y:auto;z-index:2;
+    opacity:0;transform:translateX(40px) scale(.98);
+    transition:opacity .5s ease,transform .5s ease;pointer-events:none;
+  }
+  .page.active{opacity:1;transform:none;pointer-events:auto}
+  .page::-webkit-scrollbar{width:6px}
+  .page::-webkit-scrollbar-thumb{background:rgba(140,80,110,.3);border-radius:3px}
+  .page-head{
+    font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;color:var(--ink-soft);
+    text-transform:uppercase;border-bottom:1px dashed rgba(140,80,110,.4);
+    padding-bottom:8px;margin-bottom:18px;display:flex;justify-content:space-between;
+  }
+  h2.page-title{font-family:'Playfair Display',serif;font-weight:700;font-size:30px;letter-spacing:.5px;margin-bottom:4px;color:var(--ink);}
+  .page-photo{
+    width:84px;height:104px;float:right;margin:0 0 10px 14px;
+    border:1px solid var(--ink-soft);background:var(--paper-dark);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Courier Prime',monospace;font-size:9px;color:var(--ink-soft);text-align:center;
+    box-shadow:2px 2px 0 rgba(140,80,110,.15);
+  }
+  .field{font-family:'Courier Prime',monospace;font-size:11px;margin:9px 0;color:var(--ink-soft)}
+  .field b{color:var(--ink);display:block;font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:.7}
+  p.body{font-size:15px;line-height:1.55;color:var(--ink-soft);margin:12px 0}
+  .lede{font-family:'Playfair Display',serif;font-style:italic;font-size:16px;line-height:1.5;color:var(--ink);}
+  .mrz{
+    position:absolute;left:0;right:0;bottom:0;background:var(--paper-dark);
+    border-top:1px solid rgba(140,80,110,.4);
+    font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:2px;
+    color:var(--ink-soft);padding:8px 14px;white-space:nowrap;overflow:hidden;
+  }
+  .stamp-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;justify-content:center}
+  .stamp{position:relative;cursor:pointer;border:none;background:none;width:118px;height:112px;display:flex;align-items:center;justify-content:center;transition:transform .25s ease;transform:rotate(var(--r,0deg));}
+  .stamp:hover{transform:rotate(0deg) scale(1.08)}
+  .stamp .ink{
+    width:100px;height:100px;border:3.5px solid var(--c);color:var(--c);border-radius:var(--shape,50%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:'Courier Prime',monospace;text-align:center;opacity:1;
+    box-shadow:inset 0 0 0 2px var(--c);
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='0.18' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 -2.2'/%3E%3CfeComposite operator='in' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='black' filter='url(%23r)'/%3E%3C/svg%3E");
+            mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='0.18' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 9 -2.2'/%3E%3CfeComposite operator='in' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='black' filter='url(%23r)'/%3E%3C/svg%3E");
+  }
+  .stamp .ink .big{font-size:12px;font-weight:700;letter-spacing:1px;padding:0 6px;line-height:1.15}
+  .stamp .ink .small{font-size:8.5px;font-weight:700;letter-spacing:1px;margin-top:3px;opacity:.95}
+  .project-hero{
+    width:100%;height:110px;border:1px solid var(--ink-soft);
+    background:repeating-linear-gradient(45deg,var(--paper-dark) 0 10px,var(--paper) 10px 20px);
+    display:flex;align-items:center;justify-content:center;margin:12px 0;
+    font-family:'Courier Prime',monospace;font-size:10px;color:var(--ink-soft);
+  }
+  .role-meta{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:1px;color:var(--ink-soft);margin-bottom:8px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .tag{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:1px;border:1px solid var(--ink-soft);padding:3px 8px;border-radius:2px;color:var(--ink-soft);text-transform:uppercase;}
+  .metrics{display:flex;gap:14px;margin:16px 0;flex-wrap:wrap}
+  .metric{flex:1;min-width:80px}
+  .metric .n{font-family:'Playfair Display',serif;font-weight:700;font-size:26px;color:var(--cover-dark)}
+  .metric .l{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft)}
+  ul.duties{list-style:none;margin:10px 0}
+  ul.duties li{font-size:14px;line-height:1.45;color:var(--ink-soft);padding-left:16px;position:relative;margin:7px 0}
+  ul.duties li::before{content:"\2726";position:absolute;left:0;color:var(--cover-dark);font-size:10px;top:2px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+  .chip{font-family:'Courier Prime',monospace;font-size:11px;padding:5px 10px;border:1px solid var(--cover-dark);color:var(--cover-dark);border-radius:20px;}
+  .visa-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed rgba(140,80,110,.3)}
+  .visa-row .icon{font-size:24px}
+  .visa-row .t{font-family:'Playfair Display',serif;font-weight:600;font-size:16px}
+  .visa-row .d{font-size:13px;color:var(--ink-soft);line-height:1.3}
+  /* interest photo slots */
+  .photo-slot{
+    flex-shrink:0;width:58px;height:58px;border-radius:8px;
+    border:1px solid var(--ink-soft);background:var(--paper-dark);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    font-family:'Courier Prime',monospace;font-size:7px;letter-spacing:1px;
+    color:var(--ink-soft);text-align:center;box-shadow:1px 1px 0 rgba(140,80,110,.15);
+  }
+  .photo-slot img{width:100%;height:100%;object-fit:cover}
+  .interest-card{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px dashed rgba(140,80,110,.3)}
+  .interest-card .t{font-family:'Playfair Display',serif;font-weight:600;font-size:16px}
+  .interest-card .d{font-size:13px;color:var(--ink-soft);line-height:1.3}
+  /* resume page */
+  .resume-frame{
+    border:1px solid var(--ink-soft);background:#fff;border-radius:4px;
+    padding:18px 16px;margin:12px 0;box-shadow:2px 2px 0 rgba(140,80,110,.12);
+  }
+  .resume-frame h3{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;color:var(--ink);margin-bottom:2px}
+  .resume-frame .rm{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:1px;color:var(--ink-soft);margin-bottom:10px}
+  .resume-row{font-size:13px;line-height:1.4;color:var(--ink-soft);padding:5px 0;border-top:1px dotted rgba(140,80,110,.3)}
+  .resume-row b{color:var(--ink);font-family:'Work Sans',sans-serif;font-weight:600}
+  .download-btn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:1px;
+    background:var(--cover-dark);color:var(--gold-light);text-decoration:none;
+    padding:10px 16px;border-radius:4px;transition:.2s;
+  }
+  .download-btn:hover{background:var(--cover-deep);transform:translateY(-1px)}
+  /* project image slot */
+  .proj-img{
+    width:100%;height:120px;border:1px solid var(--ink-soft);border-radius:5px;
+    background:repeating-linear-gradient(45deg,var(--paper-dark) 0 11px,var(--paper) 11px 22px);
+    display:flex;align-items:center;justify-content:center;margin:12px 0;overflow:hidden;
+    font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:1px;color:var(--ink-soft);text-align:center;
+  }
+  .proj-img img{width:100%;height:100%;object-fit:cover}
+  /* UGC template blocks */
+  .tmpl-label{
+    font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:2px;
+    text-transform:uppercase;color:var(--cover-dark);margin:18px 0 8px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .tmpl-label::after{content:"";flex:1;height:1px;background:rgba(140,80,110,.3)}
+  .video-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:4px 0}
+  .video-slot{
+    flex-shrink:0;width:78px;height:138px;border-radius:8px;
+    border:1px solid var(--ink-soft);background:var(--paper-dark);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:1px;
+    color:var(--ink-soft);text-align:center;position:relative;
+  }
+  .video-slot::before{content:"\25B6";position:absolute;font-size:16px;opacity:.25}
+  .video-slot img,.video-slot video{width:100%;height:100%;object-fit:cover}
+  .tmpl-card{
+    border:1px dashed var(--ink-soft);border-radius:6px;padding:11px 13px;margin:7px 0;
+    background:rgba(255,255,255,.3);
+  }
+  .tmpl-card .tc-title{font-family:'Playfair Display',serif;font-weight:600;font-size:15px;color:var(--ink)}
+  .tmpl-card .tc-body{font-size:13px;line-height:1.4;color:var(--ink-soft);margin-top:3px}
+  .tmpl-card .tc-step{font-family:'Courier Prime',monospace;font-size:11px;color:var(--ink-soft);margin:4px 0;padding-left:14px;position:relative}
+  .tmpl-card .tc-step::before{content:"\203A";position:absolute;left:0;color:var(--cover-dark)}
+  .pillar-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:6px 0}
+  .pillar{
+    border:1px solid var(--ink-soft);border-radius:6px;padding:9px 11px;
+    background:rgba(255,255,255,.25);
+  }
+  .pillar .pn{font-family:'Playfair Display',serif;font-weight:600;font-size:14px;color:var(--ink)}
+  .pillar .pf{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--cover-dark);margin-top:2px}
+  .pillar .pd{font-size:12px;color:var(--ink-soft);line-height:1.3;margin-top:4px}
+  .contact-link{
+    display:flex;align-items:center;gap:10px;padding:12px;margin:8px 0;
+    border:1px solid var(--ink-soft);border-radius:3px;text-decoration:none;color:var(--ink);
+    font-family:'Courier Prime',monospace;font-size:12px;background:rgba(255,255,255,.35);transition:.25s;
+  }
+  .contact-link:hover{background:var(--cover-dark);color:var(--gold-light);transform:translateX(4px)}
+  .nav{background:var(--cover-deep);display:flex;justify-content:space-between;align-items:center;padding:12px 16px;flex-shrink:0;}
+  .nav button{background:none;border:1px solid var(--gold);color:var(--gold-light);font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:1px;padding:7px 12px;border-radius:3px;cursor:pointer;transition:.2s;}
+  .nav button:hover:not(:disabled){background:var(--gold);color:var(--cover-deep)}
+  .nav button:disabled{opacity:.3;cursor:default}
+  .nav .pageno{font-family:'Courier Prime',monospace;font-size:10px;color:var(--gold-light);letter-spacing:2px}
+  .close-btn{position:absolute;top:-14px;right:-14px;z-index:60;width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;background:var(--cover-dark);color:var(--gold-light);font-size:15px;box-shadow:0 4px 10px rgba(0,0,0,.4);display:none;}
+  .open .close-btn{display:block}
+  .back-link{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:1px;color:var(--stamp-blue);background:none;border:none;cursor:pointer;margin-bottom:6px;padding:0;}
+  .back-link:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-title">AUDREY TRAJANO</div>
+  </div>
+  <nav>
+    <button class="sb-link" data-go="about"><span class="sb-ic">&#9678;</span>About<span class="sb-no">01</span></button>
+    <button class="sb-link" data-go="skills"><span class="sb-ic">&#9670;</span>Skills<span class="sb-no">02</span></button>
+    <button class="sb-link" data-go="stamps"><span class="sb-ic">&#9633;</span>Projects<span class="sb-no">03</span></button>
+    <button class="sb-link" data-go="interests"><span class="sb-ic">&#127793;</span>Interests<span class="sb-no">04</span></button>
+    <button class="sb-link" data-go="resume"><span class="sb-ic">&#9776;</span>Resume<span class="sb-no">05</span></button>
+    <button class="sb-link" data-go="contact"><span class="sb-ic">&#9993;</span>Contact<span class="sb-no">06</span></button>
+  </nav>
+</div>
+
+<div class="passport" id="passport">
+  <button class="close-btn" id="closeBtn">&#10005;</button>
+  <div class="stage">
+    <div class="book">
+      <div class="page-view" id="pageView">
+
+        <section class="page active" data-page="about">
+          <div class="page-head"><span>PASSPORT &middot; IDENTITY</span><span>P&lt;USA</span></div>
+          <div class="page-photo">PHOTO</div>
+          <h2 class="page-title">Audrey Trajano</h2>
+          <div class="field"><b>Title</b>Marketing &amp; Social Media Strategist</div>
+          <div class="field"><b>Based In</b>Philadelphia, PA</div>
+          <div class="field"><b>Experience</b>4+ Years</div>
+          <p class="lede">Marketing professional skilled at translating audience insights into compelling narratives and bringing campaigns to life across multiple channels.</p>
+          <p class="body">Experienced in brand messaging, digital content, creative production, and stakeholder management &mdash; with a proven ability to manage complex projects and multiple workstreams while keeping every detail on-brand.</p>
+          <div class="mrz">P&lt;USA&lt;TRAJANO&lt;&lt;AUDREY&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+        </section>
+
+        <section class="page" data-page="skills">
+          <div class="page-head"><span>DECLARED GOODS</span><span>SKILLS</span></div>
+          <h2 class="page-title">Skills</h2>
+          <p class="body" style="margin-top:4px">Tools &amp; disciplines carried across every border.</p>
+          <div class="chips">
+            <span class="chip">B2B Marketing Strategy</span>
+            <span class="chip">Event Planning</span>
+            <span class="chip">Email Marketing</span>
+            <span class="chip">Marketing KPIs</span>
+            <span class="chip">HubSpot</span>
+            <span class="chip">WordPress</span>
+            <span class="chip">Canva</span>
+            <span class="chip">Adobe Creative Cloud</span>
+          </div>
+        </section>
+
+        <section class="page" data-page="stamps">
+          <div class="page-head"><span>VISAS &middot; PROJECTS</span><span>ENTRIES: 5</span></div>
+          <h2 class="page-title">Projects</h2>
+          <p class="body" style="font-size:13px;margin:6px 0 0">Tap a stamp to open the project.</p>
+          <div class="stamp-grid">
+            <button class="stamp" style="--r:-7deg" onclick="goProject('p1')">
+              <div class="ink" style="--c:var(--stamp-red)"><span class="big">CONFER-<br>ENCE</span><span class="small">&#9733; 250 PAX &#9733;</span></div>
+            </button>
+            <button class="stamp" style="--r:5deg" onclick="goProject('p2')">
+              <div class="ink" style="--c:var(--stamp-blue);--shape:6px"><span class="big">SOCIAL<br>STRATEGY</span><span class="small">ANALYTICS</span></div>
+            </button>
+            <button class="stamp" style="--r:-4deg" onclick="goProject('p3')">
+              <div class="ink" style="--c:var(--stamp-green)"><span class="big">CONTENT</span><span class="small">CREATION</span></div>
+            </button>
+            <button class="stamp" style="--r:6deg" onclick="goProject('p4')">
+              <div class="ink" style="--c:var(--stamp-purple);--shape:6px"><span class="big">DESIGN</span><span class="small">AKUVO</span></div>
+            </button>
+            <button class="stamp" style="--r:-2deg" onclick="goProject('p5')">
+              <div class="ink" style="--c:#7a3050"><span class="big">UGC</span><span class="small">VIDEO &middot; SOCIAL</span></div>
+            </button>
+          </div>
+        </section>
+
+        <section class="page" data-page="p1">
+          <button class="back-link" onclick="show('stamps')">&larr; back to projects</button>
+          <div class="page-head"><span>VISA &middot; ENTRY 01</span><span>CONFERENCE</span></div>
+          <h2 class="page-title">Annual Conference</h2>
+          <div class="role-meta">AKUVO &middot; Owned end-to-end</div>
+          <div class="tags"><span class="tag">Event Marketing</span><span class="tag">Project Mgmt</span><span class="tag">Sponsorship</span></div>
+          <div class="proj-img"><!-- <img src="conference.jpg"> -->ADD EVENT PHOTO</div>
+          <div class="metrics">
+            <div class="metric"><div class="n">250</div><div class="l">Attendees</div></div>
+            <div class="metric"><div class="n">$150K</div><div class="l">Budget Owned</div></div>
+            <div class="metric"><div class="n">4-Day</div><div class="l">Program</div></div>
+          </div>
+          <ul class="duties">
+            <li>Owned end-to-end management of a 250-person, 4-day annual conference: venue contract, AV, sponsors, speakers, attendee experience, and a $150K budget.</li>
+            <li>Managed all sponsor and exhibitor relationships; produced logistics guides, sponsorship materials, and post-event program deliverables.</li>
+            <li>Content reviewed and approved by SVP of Marketing, maintaining brand consistency across every touchpoint.</li>
+            <li>Trained and onboarded the incoming Events Coordinator while maintaining full operational continuity.</li>
+          </ul>
+        </section>
+
+        <section class="page" data-page="p2">
+          <button class="back-link" onclick="show('stamps')">&larr; back to projects</button>
+          <div class="page-head"><span>VISA &middot; ENTRY 02</span><span>STRATEGY</span></div>
+          <h2 class="page-title">Social Media Strategy &amp; Analytics</h2>
+          <div class="role-meta">Freelance &middot; Multiple clients</div>
+          <div class="tags"><span class="tag">Strategy</span><span class="tag">Analytics</span><span class="tag">Research</span></div>
+          <div class="proj-img"><!-- <img src="analytics.jpg"> -->ADD DASHBOARD / REPORT SCREENSHOT</div>
+          <ul class="duties">
+            <li>Develop overarching social strategies &mdash; content pillars, audience profiles, platform mix, tone, and messaging architecture.</li>
+            <li>Conduct competitor, market, and trend research to inform long-term strategy and monthly content shifts.</li>
+            <li>Translate analytics into actionable recommendations on content mix, timing, and creative direction.</li>
+            <li>Deliver monthly strategy reports with KPI updates and optimization recommendations.</li>
+          </ul>
+        </section>
+
+        <section class="page" data-page="p3">
+          <button class="back-link" onclick="show('stamps')">&larr; back to projects</button>
+          <div class="page-head"><span>VISA &middot; ENTRY 03</span><span>CONTENT</span></div>
+          <h2 class="page-title">Content Creation</h2>
+          <div class="role-meta">AKUVO &amp; freelance</div>
+          <div class="tags"><span class="tag">Copywriting</span><span class="tag">Social</span><span class="tag">Calendar</span></div>
+          <div class="proj-img"><!-- <img src="content1.jpg"> -->ADD CONTENT SAMPLE</div>
+          <ul class="duties">
+            <li>Plan, design, and write all social media content &mdash; calendar, visual assets, and copy.</li>
+            <li>Develop messaging frameworks and creative assets for brand and product marketing campaigns.</li>
+            <li>Ensure consistent positioning and voice across all audience touchpoints.</li>
+          </ul>
+        </section>
+
+        <section class="page" data-page="p4">
+          <button class="back-link" onclick="show('stamps')">&larr; back to projects</button>
+          <div class="page-head"><span>VISA &middot; ENTRY 04</span><span>DESIGN</span></div>
+          <h2 class="page-title">Design</h2>
+          <div class="role-meta">AKUVO &middot; Web &amp; brand</div>
+          <div class="tags"><span class="tag">Web Design</span><span class="tag">Brand</span><span class="tag">Canva</span><span class="tag">Adobe CC</span></div>
+          <div class="proj-img"><!-- <img src="design-before-after.jpg"> -->ADD BEFORE / AFTER OR MOCKUP</div>
+          <ul class="duties">
+            <li>Build and design website pages and microsites independently.</li>
+            <li>Redesigned core page templates, improving visual consistency and brand alignment.</li>
+            <li>Produce visual assets across digital and print using Canva and Adobe Creative Cloud.</li>
+          </ul>
+        </section>
+
+        <section class="page" data-page="p5">
+          <button class="back-link" onclick="show('stamps')">&larr; back to projects</button>
+          <div class="page-head"><span>VISA &middot; ENTRY 05</span><span>UGC</span></div>
+          <h2 class="page-title">UGC &amp; Video</h2>
+          <div class="role-meta">User-generated content &middot; short-form video</div>
+          <div class="tags"><span class="tag">Short-Form</span><span class="tag">Scripting</span><span class="tag">Editing</span></div>
+
+          <div class="tmpl-label">Sample Reels</div>
+          <div class="video-row">
+            <div class="video-slot"><!-- <video src="reel1.mp4" controls></video> -->ADD<br>VIDEO</div>
+            <div class="video-slot">ADD<br>VIDEO</div>
+            <div class="video-slot">ADD<br>VIDEO</div>
+            <div class="video-slot">ADD<br>VIDEO</div>
+          </div>
+
+          <div class="tmpl-label">Script / Hook Template</div>
+          <div class="tmpl-card">
+            <div class="tc-title">Template name</div>
+            <div class="tc-step">Hook (0&ndash;3s): &mdash; add your opening line</div>
+            <div class="tc-step">Value (3&ndash;15s): &mdash; the main point</div>
+            <div class="tc-step">CTA (15s+): &mdash; what to do next</div>
+          </div>
+
+          <div class="tmpl-label">Shot List / Storyboard</div>
+          <div class="tmpl-card">
+            <div class="tc-title">Template name</div>
+            <div class="tc-step">Shot 1 &mdash; describe the frame</div>
+            <div class="tc-step">Shot 2 &mdash; describe the frame</div>
+            <div class="tc-step">Shot 3 &mdash; describe the frame</div>
+          </div>
+
+          <div class="tmpl-label">Content Pillars &amp; Formats</div>
+          <div class="pillar-grid">
+            <div class="pillar"><div class="pn">Pillar One</div><div class="pf">Format</div><div class="pd">Add a short idea.</div></div>
+            <div class="pillar"><div class="pn">Pillar Two</div><div class="pf">Format</div><div class="pd">Add a short idea.</div></div>
+            <div class="pillar"><div class="pn">Pillar Three</div><div class="pf">Format</div><div class="pd">Add a short idea.</div></div>
+            <div class="pillar"><div class="pn">Pillar Four</div><div class="pf">Format</div><div class="pd">Add a short idea.</div></div>
+          </div>
+        </section>
+
+        <section class="page" data-page="interests">
+          <div class="page-head"><span>DECLARATIONS</span><span>PERSONAL</span></div>
+          <h2 class="page-title">Interests</h2>
+          <p class="body" style="font-size:13px;margin-top:2px">Drop a real photo into each frame &mdash; swap the placeholder for <code style="font-size:11px">&lt;img src="your-photo.jpg"&gt;</code>.</p>
+          <div class="interest-card">
+            <div class="photo-slot"><!-- <img src="photo1.jpg"> -->ADD<br>PHOTO</div>
+            <div><div class="t">Community &amp; Environment</div><div class="d">Leading neighborhood cleanups in West Philly.</div></div>
+          </div>
+          <div class="interest-card">
+            <div class="photo-slot"><!-- <img src="photo2.jpg"> -->ADD<br>PHOTO</div>
+            <div><div class="t">Design &amp; Creative</div><div class="d">Add a line about what you love making.</div></div>
+          </div>
+          <div class="interest-card">
+            <div class="photo-slot"><!-- <img src="photo3.jpg"> -->ADD<br>PHOTO</div>
+            <div><div class="t">Interest Three</div><div class="d">Replace with your own.</div></div>
+          </div>
+          <div class="interest-card">
+            <div class="photo-slot"><!-- <img src="photo4.jpg"> -->ADD<br>PHOTO</div>
+            <div><div class="t">Interest Four</div><div class="d">Replace with your own.</div></div>
+          </div>
+        </section>
+
+        <section class="page" data-page="resume">
+          <div class="page-head"><span>OFFICIAL RECORD</span><span>RESUME</span></div>
+          <h2 class="page-title">Resume</h2>
+          <p class="body" style="font-size:13px;margin-top:2px">The full document, stamped and certified.</p>
+          <div class="resume-frame">
+            <h3>Audrey Trajano</h3>
+            <div class="rm">Marketing &amp; Social Media Strategist &middot; Philadelphia, PA</div>
+            <div class="resume-row"><b>Digital Marketing Specialist</b> &mdash; AKUVO &middot; 2023&ndash;Present</div>
+            <div class="resume-row"><b>Freelance Social Media Strategist</b> &middot; 2025&ndash;Present</div>
+            <div class="resume-row"><b>Marketing Coordinator</b> &mdash; Altus Agency &middot; 2020&ndash;2022</div>
+            <div class="resume-row"><b>Volunteer Leader</b> &mdash; Cobbs Creek Ambassadors &middot; 2023&ndash;Present</div>
+            <div class="resume-row"><b>Skills</b> &middot; B2B Strategy, Event Planning, Email, KPIs, HubSpot, WordPress, Canva, Adobe CC</div>
+          </div>
+          <a class="download-btn" href="Audrey_Trajano.pdf" target="_blank" download>&#11015; &nbsp; DOWNLOAD PDF</a>
+          <p class="body" style="font-size:11px;margin-top:14px">Tip: place your <code style="font-size:10px">Audrey_Trajano.pdf</code> in the same folder as this file and the button will open it.</p>
+        </section>
+
+        <section class="page" data-page="contact">
+          <div class="page-head"><span>PORT OF ENTRY</span><span>CONTACT</span></div>
+          <h2 class="page-title">Get in touch</h2>
+          <p class="body" style="font-size:14px">Ready to collaborate? Cross the border.</p>
+          <a class="contact-link" href="mailto:trajanoaudrey@gmail.com">&#9993; &nbsp; trajanoaudrey@gmail.com</a>
+          <a class="contact-link" href="https://linkedin.com/in/audreytrajano" target="_blank">in &nbsp; linkedin.com/in/audreytrajano</a>
+          <a class="contact-link" href="#">&#9678; &nbsp; Philadelphia, PA</a>
+          <div class="mrz" style="margin-top:20px;position:static">EXIT&lt;&lt;THANK&lt;YOU&lt;FOR&lt;VISITING&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+        </section>
+
+      </div>
+      <div class="nav">
+        <button id="prevBtn">&lsaquo; PREV</button>
+        <span class="pageno" id="pageNo">01 / 06</span>
+        <button id="nextBtn">NEXT &rsaquo;</button>
+      </div>
+      <div class="noise"></div>
+    </div>
+    <div class="cover" id="cover">
+      <div class="leather"></div>
+      <div class="leather fine"></div>
+      <div class="crest"><span class="monogram">A</span></div>
+      <div>
+        <h1>PORTFOLIO<br>PASSPORT</h1>
+        <div class="sub">AUDREY TRAJANO</div>
+      </div>
+      <div class="hint">&mdash; TAP TO OPEN &mdash;</div>
+    </div>
+  </div>
+</div>
+<script>
+  const order = ['about','skills','stamps','interests','resume','contact'];
+  const pages = [...document.querySelectorAll('.page')];
+  const sbLinks = [...document.querySelectorAll('.sb-link')];
+  let idx = 0;
+  function show(name){
+    pages.forEach(p=>p.classList.toggle('active', p.dataset.page===name));
+    document.getElementById('pageView').scrollTop = 0;
+    const pos = order.indexOf(name);
+    if(pos>-1){
+      idx = pos;
+      document.getElementById('pageNo').textContent =
+        String(pos+1).padStart(2,'0')+' / '+String(order.length).padStart(2,'0');
+    } else {
+      document.getElementById('pageNo').textContent = '\u2726 / '+String(order.length).padStart(2,'0');
+    }
+    document.getElementById('prevBtn').disabled = pos===0;
+    document.getElementById('nextBtn').disabled = pos===order.length-1;
+    sbLinks.forEach(l=>l.classList.toggle('current', l.dataset.go===name));
+  }
+  function goProject(id){ show(id); }
+  document.getElementById('nextBtn').onclick = ()=>{ if(idx<order.length-1) show(order[idx+1]); };
+  document.getElementById('prevBtn').onclick = ()=>{ if(idx>0) show(order[idx-1]); };
+  const passport = document.getElementById('passport');
+  document.getElementById('cover').onclick = ()=> passport.classList.add('open');
+  document.getElementById('closeBtn').onclick = ()=> passport.classList.remove('open');
+  sbLinks.forEach(l=>l.addEventListener('click', ()=>{
+    passport.classList.add('open');   // open the book if still closed
+    show(l.dataset.go);
+  }));
+  show('about');
+</script>
+</body>
+</html>
